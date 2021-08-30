@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useMemo } from "react";
+// useMemo() : se giup minh ghi nho lai ket qua tra ve
+function expensiveFunction(number) {
+  console.log("Bat dau");
+
+  const start = new Date();
+
+  // doi o day 3s
+  while (new Date() - start < 3000);
+  // 3s -> 3000
+  console.log("Ket thuc", new Date() - start, "ms");
+
+  return number * number;
+}
 
 function App() {
+  const [count, setCount] = useState(0);
+  const [num, setNum] = useState(20);
+
+  // dung nen lam dung useMemo()
+  const number = useMemo(() => {
+    expensiveFunction(num);
+  }, [num]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>+</button>
+
+      <p>Number: {number}</p>
+    </>
   );
 }
 
